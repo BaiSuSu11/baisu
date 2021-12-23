@@ -9,7 +9,7 @@ public class BaseEntity implements Serializable {
    private String createdUser;
    private Date createdTime;
    private String modifiedUser;
-   private String modifiedTime;
+   private Date modifiedTime;
 
     public String getCreatedUser() {
         return createdUser;
@@ -35,11 +35,11 @@ public class BaseEntity implements Serializable {
         this.modifiedUser = modifiedUser;
     }
 
-    public String getModifiedTime() {
+    public Date getModifiedTime() {
         return modifiedTime;
     }
 
-    public void setModifiedTime(String modifiedTime) {
+    public void setModifiedTime(Date modifiedTime) {
         this.modifiedTime = modifiedTime;
     }
 
