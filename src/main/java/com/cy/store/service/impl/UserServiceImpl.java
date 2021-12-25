@@ -4,6 +4,8 @@ import com.cy.store.entity.User;
 import com.cy.store.mapper.UserMapper;
 import com.cy.store.service.IUserService;
 import com.cy.store.service.ex.InsertException;
+import com.cy.store.service.ex.PasswordNotMatchException;
+import com.cy.store.service.ex.UserNotFoundException;
 import com.cy.store.service.ex.UsernameDuplicatedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,6 +54,39 @@ public class UserServiceImpl implements IUserService {
 
 
     }
+
+    @Override
+    public User login(String username, String password) {
+        User byUsername = userMapper.findByUsername(username);
+         if (byUsername == null) {
+             throw  new UserNotFoundException("用户数据不存在");
+         }
+         String oldPassword = byUsername.getPassword();
+         //检测用户的密码是否匹配
+        String salt = byUsername.getSalt();
+
+         String newMd5Password = getMD5Password(password,salt);
+
+         if (!oldPassword.equals(newMd5Password)) {
+             throw new PasswordNotMatchException("用户密码错误");
+
+         }
+         //判断is_delete字段的值是否为1
+        if ( byUsername.getIsDelete() == 1) {
+
+            throw new UserNotFoundException("用户数据不存在");
+        }
+
+        User user = new User();
+
+        return byUsername;
+
+
+        
+
+
+    }
+
     private String getMD5Password(String password,String salt) {
         //md5加密算法的调用(三次）
 
