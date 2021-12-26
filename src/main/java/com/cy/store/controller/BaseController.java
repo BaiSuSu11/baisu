@@ -1,10 +1,12 @@
 package com.cy.store.controller;
 
-import com.cy.store.service.ex.InsertException;
-import com.cy.store.service.ex.ServiceException;
-import com.cy.store.service.ex.UsernameDuplicatedException;
+import com.cy.store.service.ex.*;
 import com.cy.store.util.JsonResult;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
 
 //表示控制层的基类
 public class BaseController {
@@ -19,17 +21,45 @@ public class BaseController {
         JsonResult<Void> result = new JsonResult<>(e);
         if ( e instanceof UsernameDuplicatedException) {
             result.setState(4000);
-            result.setMessage("用户名已经被占用");
-        } else if(e instanceof InsertException) {
+            result.setMessage("用户名已经被占用的异常");
+        } else if(e instanceof UserNotFoundException) {
+            result.setState(5001);
+            result.setMessage("用户数据不存在的异常");
+        } else if(e instanceof PasswordNotMatchException) {
+            result.setState(5002);
+            result.setMessage("用户名的密码错误的异常");
+        }
+        else if(e instanceof InsertException) {
             result.setState(5000);
             result.setMessage("注册时产生未知的异常");
         }
         return  result;
 
+    }
 
+    /**
+     * 获取session对象中的uid
+     * @param session
+     * @return 当前用户登录的uid
+     */
+    protected  final Integer getUidFromSession(HttpSession session) {
 
+       return Integer.valueOf(session.getAttribute("uid").toString());
 
     }
+
+    /**
+     * 获取当前登录用户的username
+     * @param session
+     * @return
+     */
+
+    protected  final String getUsernameFromSession(HttpSession session) {
+
+        return session.getAttribute("username").toString();
+
+    }
+
 
 
 }

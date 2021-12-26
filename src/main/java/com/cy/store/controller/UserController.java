@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpSession;
+
 @RestController
 @RequestMapping("users")
 public class UserController extends BaseController {
@@ -36,6 +38,23 @@ public class UserController extends BaseController {
         userService.reg(user);
         return  new JsonResult<>(OK);
 
+
+
+
+    }
+
+    @RequestMapping("login")
+    public JsonResult<User> login(String username, String password, HttpSession httpSession) {
+        User data= userService.login(username, password);
+        //向session对象中完成数据的绑定（session全局的）
+        httpSession.setAttribute("uid",data.getUid());
+        httpSession.setAttribute("username",data.getUsername());
+
+        //获取session中绑定的数据
+        System.out.println(getUidFromSession(httpSession));
+        System.out.println(getUsernameFromSession(httpSession));
+
+        return  new JsonResult<User>(OK,data);
 
     }
 

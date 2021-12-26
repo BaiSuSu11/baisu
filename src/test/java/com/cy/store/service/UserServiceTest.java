@@ -32,6 +32,13 @@ public class UserServiceTest {
             e.printStackTrace();
         }
     }
+    @Test
+    public void login() {
+        User test01 = userService.login("jacob", "wsw522315");
+        System.out.println(test01);
+
+
+    }
 
 
 
