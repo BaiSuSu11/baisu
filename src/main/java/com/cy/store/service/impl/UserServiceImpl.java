@@ -3,10 +3,7 @@ package com.cy.store.service.impl;
 import com.cy.store.entity.User;
 import com.cy.store.mapper.UserMapper;
 import com.cy.store.service.IUserService;
-import com.cy.store.service.ex.InsertException;
-import com.cy.store.service.ex.PasswordNotMatchException;
-import com.cy.store.service.ex.UserNotFoundException;
-import com.cy.store.service.ex.UsernameDuplicatedException;
+import com.cy.store.service.ex.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
@@ -68,6 +65,7 @@ public class UserServiceImpl implements IUserService {
             throw new UserNotFoundException("用户数据不存在的错误");
         }
 
+
         // 从查询结果中获取盐值
         String salt = result.getSalt();
         // 调用getMd5Password()方法，将参数password和salt结合起来进行加密
@@ -86,6 +84,29 @@ public class UserServiceImpl implements IUserService {
         user.setAvatar(result.getAvatar());
         // 返回新的user对象
         return user;
+    }
+
+    @Override
+    public void changePassword(Integer uid, String username, String oldPassword, String newPassword) {
+        User result = userMapper.findByUid(uid);
+        if (result ==null || result.getIsDelete() == 1) {
+            throw  new  UserNotFoundException("用户数据不存在");
+        }
+        String oldMd5Password = getMd5Password(oldPassword, result.getSalt());
+
+        if (!result.getPassword().equals(oldMd5Password)) {
+            throw  new  PasswordNotMatchException("密码错误");
+
+        }
+        //将新的密码设置到数据库中，将新的密码进行加密再去更新
+        String newMd5Password = getMd5Password(newPassword, result.getSalt());
+        Integer rows = userMapper.updatePasswordByUid(uid, newMd5Password, username, new Date());
+        if ( rows != 1) {
+            throw  new UpdateException("更新数据时产生未知的异常");
+
+        }
+
+
     }
 
     private String getMd5Password(String password, String salt) {

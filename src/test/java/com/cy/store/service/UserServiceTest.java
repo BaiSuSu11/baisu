@@ -40,6 +40,13 @@ public class UserServiceTest {
 
     }
 
+    @Test
+    public void changePassword () {
+
+        userService.changePassword(21,"管理员","wsw522315","522315");
+
+    }
+
 
 
 }
