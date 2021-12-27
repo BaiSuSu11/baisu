@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import sun.management.snmp.jvminstr.JvmOSImpl;
 
 import javax.servlet.http.HttpSession;
 
@@ -55,6 +56,15 @@ public class UserController extends BaseController {
         System.out.println(getUsernameFromSession(httpSession));
 
         return  new JsonResult<User>(OK,data);
+
+    }
+
+    @RequestMapping("change_password")
+    public JsonResult<Void> changePassword(String oldPassword,String newPassword,HttpSession session) {
+        Integer uidFromSession = getUidFromSession(session);
+        String usernameFromSession = getUsernameFromSession(session);
+        userService.changePassword(uidFromSession,usernameFromSession,oldPassword,newPassword);
+        return new  JsonResult<Void>(OK);
 
     }
 
