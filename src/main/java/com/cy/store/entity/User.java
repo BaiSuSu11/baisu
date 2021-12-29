@@ -9,7 +9,7 @@ public class User extends BaseEntity implements Serializable {
     private String salt;
     private String phone;
     private String email;
-    private String gender;
+    private Integer gender;
     private String avatar;
     private Integer isDelete;
 
@@ -61,11 +61,11 @@ public class User extends BaseEntity implements Serializable {
         this.email = email;
     }
 
-    public String getGender() {
+    public Integer getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(Integer gender) {
         this.gender = gender;
     }
 

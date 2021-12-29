@@ -29,5 +29,10 @@ public interface UserMapper {
     User findByUid(Integer uid);
 
 
+    Integer updateInfoByUid(User user);
+
+
+
+
 
 }
