@@ -20,7 +20,7 @@ public class BaseController {
     public JsonResult<Void> handleException(Throwable e) {
         JsonResult<Void> result = new JsonResult<>(e);
         if ( e instanceof UsernameDuplicatedException) {
-            result.setState(4000);
+            result.setState(5000);
             result.setMessage("用户名已经被占用的异常");
         } else if(e instanceof UserNotFoundException) {
             result.setState(4001);
@@ -32,10 +32,12 @@ public class BaseController {
             result.setState(4003);
             result.setMessage("用户收货地址超出上限异常");
         }
-        else if(e instanceof InsertException) {
-            result.setState(5000);
-            result.setMessage("注册时产生未知的异常");
+        else if(e instanceof UpdateException) {
+            result.setState(4001);
+            result.setMessage("更新数据时产生未知的异常");
         }
+
+
         return  result;
 
     }
