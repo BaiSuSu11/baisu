@@ -31,6 +31,9 @@ public class BaseController {
         } else if(e instanceof AddressCountLimitException) {
             result.setState(4003);
             result.setMessage("用户收货地址超出上限异常");
+        }else if(e instanceof ProductNotFoundException) {
+            result.setState(4006);
+            result.setMessage("收货地址数据非法访问的异常");
         }
         else if(e instanceof UpdateException) {
             result.setState(4001);
