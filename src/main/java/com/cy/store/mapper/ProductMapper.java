@@ -8,4 +8,5 @@ public interface ProductMapper {
     List<Product> findHotList();
 
     Product findById(Integer id);
+    //test pushing
 }
