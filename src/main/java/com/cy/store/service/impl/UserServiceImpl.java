@@ -122,7 +122,6 @@ public class UserServiceImpl implements IUserService {
         user.setPhone(result.getPhone());
         user.setEmail(result.getEmail());
         user.setGender(result.getGender());
-
         return user;
     }
 
