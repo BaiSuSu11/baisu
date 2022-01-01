@@ -65,6 +65,11 @@ public class UserServiceTest {
 
 
     }
+    @Test
+    public void updateAvatarByUid() {
+        userService.changeAvatar(22,"/upload/test.png","小明");
+
+    }
 
 
 }
