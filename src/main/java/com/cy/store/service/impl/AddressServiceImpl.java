@@ -62,4 +62,29 @@ public class AddressServiceImpl implements IAddressService {
         }
     }
 
+    @Override
+    public List<Address> getByUid(Integer uid) {
+        List<Address> list = addressMapper.findByUid(uid);
+        //不需要全部的数据
+        for (Address address : list)
+        {
+            address.setAid(null);
+            address.setUid(null);
+//            address.setProvinceName(null);
+            address.setProvinceCode(null);
+//            address.setCityName(null);
+            address.setCityCode(null);
+//            address.setAreaName(null);
+            address.setAreaCode(null);
+//            address.setZip(null);
+            address.setTel(null);
+            address.setIsDefault(null);
+            address.setCreatedUser(null);
+            address.setCreatedTime(null);
+            address.setModifiedUser(null);
+            address.setModifiedTime(null);
+        }
+        return list;
+    }
+
 }
