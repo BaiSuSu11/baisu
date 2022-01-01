@@ -41,6 +41,11 @@
     	uid=#{uid}
 </select>
 
+    <select id="findByUid" resultMap="AddressEntityMap">
+        SELECT * FROM t_address WHERE uid=#{uid}
+        ORDER BY is_default DESC , created_time DESC
+    </select>
+
 
 </mapper>
 
