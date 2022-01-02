@@ -1,5 +1,7 @@
 package com.cy.store.service;
+
 import com.cy.store.entity.Product;
+
 import java.util.List;
 
 /** 处理商品数据的业务层接口 */

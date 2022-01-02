@@ -1,5 +1,7 @@
 package com.cy.store.mapper;
+
 import com.cy.store.entity.Product;
+
 import java.util.List;
 
 /** 处理商品数据的持久层接口 */
@@ -9,6 +11,7 @@ public interface ProductMapper {
      * @return 热销商品前四名的集合
      */
     List<Product> findHotList();
+
     /**
      * 根据商品id查询商品详情
      * @param id 商品id

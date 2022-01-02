@@ -1,4 +1,5 @@
 package com.cy.store.mapper;
+
 import com.cy.store.entity.Cart;
 import com.cy.store.entity.Product;
 import com.cy.store.vo.CartVO;
@@ -7,12 +8,13 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
 import java.util.Date;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class CartMapperTest {
+public class CartMapperTests {
     @Autowired
     private CartMapper cartMapper;
 
@@ -20,8 +22,8 @@ public class CartMapperTest {
     public void insert() {
         Cart cart = new Cart();
         cart.setUid(1);
-        cart.setPid(10000042);
-        cart.setNum(1);
+        cart.setPid(2);
+        cart.setNum(3);
         cart.setPrice(4L);
         Integer rows = cartMapper.insert(cart);
         System.out.println("rows=" + rows);
@@ -29,7 +31,7 @@ public class CartMapperTest {
 
     @Test
     public void updateNumByCid() {
-        Integer cid = 3;
+        Integer cid = 1;
         Integer num = 10;
         String modifiedUser = "购物车管理员";
         Date modifiedTime = new Date();
@@ -56,5 +58,15 @@ public class CartMapperTest {
         Integer cid = 6;
         Cart result = cartMapper.findByCid(cid);
         System.out.println(result);
+    }
+
+    @Test
+    public void findVOByCids() {
+        Integer[] cids = {1, 2, 6, 7, 8, 9, 10};
+        List<CartVO> list = cartMapper.findVOByCids(cids);
+        System.out.println("count=" + list.size());
+        for (CartVO item : list) {
+            System.out.println(item);
+        }
     }
 }
