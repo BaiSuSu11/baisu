@@ -61,10 +61,6 @@ public class UserMapperTest {
 
    }
 
-   @Test
-public void updateAvatarByUid() {
-        userMapper.updateAvatarByUid(22,"/upload/avatar.png","管理员",new Date());
-}
 
 
 

@@ -35,6 +35,7 @@ public class LoginInterceptorConfigurer implements WebMvcConfigurer {
         list.add("/users/reg");
         list.add("/users/login");
         list.add("/districts/**");
+        list.add("/product/**");
 
 
         //完成拦截器的注册
