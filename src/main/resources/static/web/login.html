@@ -157,7 +157,8 @@
 				{
 					alert("登录成功");
 					//相对路径来确定跳转的页面
-
+					$.cookie("avatar", json.data.avatar, {expires: 7});
+					console.log("cookie中的avatar=" + $.cookie("avatar"));
 					location.href = "index.html";
 
 				}
