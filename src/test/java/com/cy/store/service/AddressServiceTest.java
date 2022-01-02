@@ -20,4 +20,9 @@ public class AddressServiceTest {
         address.setPhone("1572248799");
         addressService.addNewAddress(1,"xu",address);
     }
+
+    @Test
+    public void setDefault(){
+        addressService.setDefault(10,2,"白苏苏");
+    }
 }

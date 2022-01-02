@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.rmi.AccessException;
 import java.util.Date;
 import java.util.List;
 
@@ -68,8 +69,8 @@ public class AddressServiceImpl implements IAddressService {
         //不需要全部的数据
         for (Address address : list)
         {
-            address.setAid(null);
-            address.setUid(null);
+//            address.setAid(null);
+//            address.setUid(null);
 //            address.setProvinceName(null);
             address.setProvinceCode(null);
 //            address.setCityName(null);
@@ -86,5 +87,28 @@ public class AddressServiceImpl implements IAddressService {
         }
         return list;
     }
+
+    @Override
+    public void setDefault(Integer aid, Integer uid, String username) {
+        Address result = addressMapper.findByAid(aid);
+        if (result == null){
+            throw new AddressNotFoundException("收货地址没有找到");
+        }
+        //是否非法访问
+        if (!result.getUid().equals(uid)){
+            throw new AccessDeniedException("非法数据访问");
+        }
+
+        Integer rows = addressMapper.updateNonDefault(uid);
+        if(rows < 1){
+            throw  new UpdateException("更新异常");
+        }
+        rows  = addressMapper.updateDefaultByAid(aid,username,new Date());
+        if (rows != 1 )
+        {
+            throw  new UpdateException("更新异常");
+        }
+    }
+
 
 }
