@@ -1,8 +1,8 @@
 package com.cy.store.entity;
 
 import java.io.Serializable;
-import java.util.Objects;
 
+/** 商品数据的实体类 */
 public class Product extends BaseEntity implements Serializable {
     private Integer id;
     private Integer categoryId;
@@ -14,45 +14,6 @@ public class Product extends BaseEntity implements Serializable {
     private String image;
     private Integer status;
     private Integer priority;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-        Product product = (Product) o;
-        return Objects.equals(id, product.id) &&
-                Objects.equals(categoryId, product.categoryId) &&
-                Objects.equals(itemType, product.itemType) &&
-                Objects.equals(title, product.title) &&
-                Objects.equals(sellPoint, product.sellPoint) &&
-                Objects.equals(price, product.price) &&
-                Objects.equals(num, product.num) &&
-                Objects.equals(image, product.image) &&
-                Objects.equals(status, product.status) &&
-                Objects.equals(priority, product.priority);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), id, categoryId, itemType, title, sellPoint, price, num, image, status, priority);
-    }
-
-    @Override
-    public String toString() {
-        return "Product{" +
-                "id=" + id +
-                ", categoryId=" + categoryId +
-                ", itemType='" + itemType + '\'' +
-                ", title='" + title + '\'' +
-                ", sellPoint='" + sellPoint + '\'' +
-                ", price=" + price +
-                ", num=" + num +
-                ", image='" + image + '\'' +
-                ", status=" + status +
-                ", priority=" + priority +
-                '}';
-    }
 
     public Integer getId() {
         return id;
@@ -132,5 +93,58 @@ public class Product extends BaseEntity implements Serializable {
 
     public void setPriority(Integer priority) {
         this.priority = priority;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Product)) return false;
+
+        Product product = (Product) o;
+
+        if (getId() != null ? !getId().equals(product.getId()) : product.getId() != null) return false;
+        if (getCategoryId() != null ? !getCategoryId().equals(product.getCategoryId()) : product.getCategoryId() != null)
+            return false;
+        if (getItemType() != null ? !getItemType().equals(product.getItemType()) : product.getItemType() != null)
+            return false;
+        if (getTitle() != null ? !getTitle().equals(product.getTitle()) : product.getTitle() != null) return false;
+        if (getSellPoint() != null ? !getSellPoint().equals(product.getSellPoint()) : product.getSellPoint() != null)
+            return false;
+        if (getPrice() != null ? !getPrice().equals(product.getPrice()) : product.getPrice() != null) return false;
+        if (getNum() != null ? !getNum().equals(product.getNum()) : product.getNum() != null) return false;
+        if (getImage() != null ? !getImage().equals(product.getImage()) : product.getImage() != null) return false;
+        if (getStatus() != null ? !getStatus().equals(product.getStatus()) : product.getStatus() != null) return false;
+        return getPriority() != null ? getPriority().equals(product.getPriority()) : product.getPriority() == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getId() != null ? getId().hashCode() : 0;
+        result = 31 * result + (getCategoryId() != null ? getCategoryId().hashCode() : 0);
+        result = 31 * result + (getItemType() != null ? getItemType().hashCode() : 0);
+        result = 31 * result + (getTitle() != null ? getTitle().hashCode() : 0);
+        result = 31 * result + (getSellPoint() != null ? getSellPoint().hashCode() : 0);
+        result = 31 * result + (getPrice() != null ? getPrice().hashCode() : 0);
+        result = 31 * result + (getNum() != null ? getNum().hashCode() : 0);
+        result = 31 * result + (getImage() != null ? getImage().hashCode() : 0);
+        result = 31 * result + (getStatus() != null ? getStatus().hashCode() : 0);
+        result = 31 * result + (getPriority() != null ? getPriority().hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", categoryId=" + categoryId +
+                ", itemType='" + itemType + '\'' +
+                ", title='" + title + '\'' +
+                ", sellPoint='" + sellPoint + '\'' +
+                ", price=" + price +
+                ", num=" + num +
+                ", image='" + image + '\'' +
+                ", status=" + status +
+                ", priority=" + priority +
+                "} " + super.toString();
     }
 }

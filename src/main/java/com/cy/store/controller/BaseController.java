@@ -39,7 +39,11 @@ public class BaseController {
             result.setMessage("用户收货地址非法访问上限异常");
         }else if(e instanceof ProductNotFoundException) {
             result.setState(4006);
-            result.setMessage("收货地址数据非法访问的异常");
+            result.setMessage("商品未找到的异常");
+        }
+        else if (e instanceof CartNotFoundException) {
+            result.setState(4007);
+            result.setMessage("购物车未找到的异常");
         }
         else if(e instanceof UpdateException) {
             result.setState(4001);

@@ -310,11 +310,19 @@
 							$("#product-title").html(json.data.title);
 							$("#product-sell-point").html(json.data.sellPoint);
 							$("#product-price").html(json.data.price);
+
 							for (let i = 1; i <= 5; i++) {
 								$("#product-image-" + i + "-big").attr("src", ".." + json.data.image + i + "_big.png");
-							 $("#product-image-" + i).attr("src", ".." + json.data.image + i + ".jpg"); }
+								$("#product-image-" + i).attr("src", ".." + json.data.image + i + ".jpg");
+							}
 						} else if (json.state == 4006) { // 商品数据不存在的异常
-							 location.href = "index.html"; } else { alert("获取商品信息失败！" + json.message); } } }); });
+							location.href = "index.html";
+						} else {
+							alert("获取商品信息失败！" + json.message);
+						}
+					}
+				});
+			});
 
 			$("#btn-add-to-cart").click(function() {
 				$.ajax({
@@ -333,13 +341,12 @@
 						}
 					},
 					error: function(xhr) {
-						alert("加入购物车时产生未知的异常" + xhr.message);
+						alert("您的登录信息已经过期，请重新登录！HTTP响应码：" + xhr.status);
+						location.href = "login.html";
 					}
 				});
 			});
-
 		</script>
-
 	</body>
 
 </html>
