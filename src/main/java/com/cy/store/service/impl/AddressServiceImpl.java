@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.rmi.AccessException;
 import java.util.Date;
 import java.util.List;
 
@@ -66,20 +65,11 @@ public class AddressServiceImpl implements IAddressService {
     @Override
     public List<Address> getByUid(Integer uid) {
         List<Address> list = addressMapper.findByUid(uid);
-        //不需要全部的数据
-        for (Address address : list)
-        {
-//            address.setAid(null);
+        for (Address address : list) {
 //            address.setUid(null);
-//            address.setProvinceName(null);
             address.setProvinceCode(null);
-//            address.setCityName(null);
             address.setCityCode(null);
-//            address.setAreaName(null);
             address.setAreaCode(null);
-//            address.setZip(null);
-            address.setTel(null);
-            address.setIsDefault(null);
             address.setCreatedUser(null);
             address.setCreatedTime(null);
             address.setModifiedUser(null);
@@ -88,27 +78,38 @@ public class AddressServiceImpl implements IAddressService {
         return list;
     }
 
+    @Transactional
     @Override
     public void setDefault(Integer aid, Integer uid, String username) {
+        // 根据参数aid，调用addressMapper中的findByAid()查询收货地址数据
         Address result = addressMapper.findByAid(aid);
-        if (result == null){
-            throw new AddressNotFoundException("收货地址没有找到");
-        }
-        //是否非法访问
-        if (!result.getUid().equals(uid)){
-            throw new AccessDeniedException("非法数据访问");
+        // 判断查询结果是否为null
+        if (result == null) {
+            // 是：抛出AddressNotFoundException
+            throw new AddressNotFoundException("尝试访问的收货地址数据不存在");
         }
 
-        Integer rows = addressMapper.updateNonDefault(uid);
-        if(rows < 1){
-            throw  new UpdateException("更新异常");
+        // 判断查询结果中的uid与参数uid是否不一致(使用equals()判断)
+        if (!result.getUid().equals(uid)) {
+            // 是：抛出AccessDeniedException
+            throw new AccessDeniedException("非法访问的异常");
         }
-        rows  = addressMapper.updateDefaultByAid(aid,username,new Date());
-        if (rows != 1 )
-        {
-            throw  new UpdateException("更新异常");
+
+        // 调用addressMapper的updateNonDefaultByUid()将该用户的所有收货地址全部设置为非默认，并获取返回受影响的行数
+        Integer rows = addressMapper.updateNonDefaultByUid(uid);
+        // 判断受影响的行数是否小于1(不大于0)
+        if (rows < 1) {
+            // 是：抛出UpdateException
+            throw new UpdateException("设置默认收货地址时出现未知错误[1]");
+        }
+
+        // 调用addressMapper的updateDefaultByAid()将指定aid的收货地址设置为默认，并获取返回的受影响的行数
+        rows = addressMapper.updateDefaultByAid(aid, username, new Date());
+        // 判断受影响的行数是否不为1
+        if (rows != 1) {
+            // 是：抛出UpdateException
+            throw new UpdateException("设置默认收货地址时出现未知错误[2]");
         }
     }
-
 
 }

@@ -33,25 +33,35 @@ public class AddressMapperTest {
     }
 
     @Test
-    public void findByUid(){
-        List<Address> list = addressMapper.findByUid(2);
-        System.out.println(list);
-    }
-
-
-    @Test
-    public void findByAid(){
-        System.err.println(addressMapper.findByAid(10));
-    }
-
-    @Test
-    public void updateNonDefault(){
-        addressMapper.updateNonDefault(2);
+    public void findByUid() {
+        Integer uid = 26;
+        List<Address> list = addressMapper.findByUid(uid);
+        System.out.println("count=" + list.size());
+        for (Address item : list) {
+            System.out.println(item);
+        }
     }
 
     @Test
-    public void updateDefaultByAid(){
-        addressMapper.updateDefaultByAid(9,"白苏",new Date());
+    public void updateNonDefaultByUid() {
+        Integer uid = 26;
+        Integer rows = addressMapper.updateNonDefaultByUid(uid);
+        System.out.println("rows=" + rows);
+    }
 
+    @Test
+    public void updateDefaultByAid() {
+        Integer aid = 11;
+        String modifiedUser = "管理员";
+        Date modifiedTime = new Date();
+        Integer rows = addressMapper.updateDefaultByAid(aid, modifiedUser, modifiedTime);
+        System.out.println("rows=" + rows);
+    }
+
+    @Test
+    public void findByAid() {
+        Integer aid = 11;
+        Address result = addressMapper.findByAid(aid);
+        System.out.println(result);
     }
 }

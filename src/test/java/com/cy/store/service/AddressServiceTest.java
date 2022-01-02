@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.List;
+
 @SpringBootTest
 @RunWith(SpringRunner.class)
 public class AddressServiceTest {
@@ -22,7 +24,22 @@ public class AddressServiceTest {
     }
 
     @Test
-    public void setDefault(){
-        addressService.setDefault(10,2,"白苏苏");
+    public void getByUid() {
+        Integer uid = 26;
+        List<Address> list = addressService.getByUid(uid);
+        System.out.println("count=" + list.size());
+        for (Address item : list) {
+            System.out.println(item);
+        }
+    }
+
+    @Test
+    public void setDefault() {
+            Integer aid = 13;
+            Integer uid = 27;
+            String username = "系统管理员";
+            addressService.setDefault(aid, uid, username);
+            System.out.println("OK.");
+
     }
 }

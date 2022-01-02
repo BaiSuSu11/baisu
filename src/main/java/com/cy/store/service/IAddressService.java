@@ -10,16 +10,14 @@ import java.util.List;
 public interface IAddressService {
     void addNewAddress(Integer uid,String username ,Address address);
 
-
-    //根据用户的id来获取用户的地址信息
     List<Address> getByUid(Integer uid);
 
     /**
-     * 设置用户默认收货地址
-     * @param aid 收获地址id
-     * @param uid 用户id
-     * @param username 修改人
+     * 设置默认收货地址
+     * @param aid 收货地址id
+     * @param uid 归属的用户id
+     * @param username 当前登录的用户名
      */
-    void setDefault(Integer aid , Integer uid , String username);
+    void setDefault(Integer aid, Integer uid, String username);
 
 }
